@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    List Vehicles
+{% endblock %}
+ 
+{% block header %}
+    Vehicles
+{% endblock %}
+
+{% block main %}
+<a href='{% url 'create-vehicle' %}'> Create Vehicle </a>
+{% for vehicle in all_vehicles %}
+    <p>model: {{ vehicle.model }}</p> 
+    <p>brand: {{ vehicle.brand }}</p> 
+    <p>type: {{ vehicle.type }}</p>
+    <br>
+    <br>
+{% endfor %}
+
+{% endblock %}
+
+
+
