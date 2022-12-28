@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from vehicle.views import about, list_vehicles, home, create_vehicle
+from vehicle.views import about, list_vehicles, home, create_vehicle, vehicle_detail, vehicle_delete
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -25,5 +25,7 @@ urlpatterns = [
     path('about-our-shop/', about, name='about'),
     path('', home, name='home'),
     path('vehicles/', list_vehicles, name='list-vehicle'),
-    path('new-vehicle/', create_vehicle, name='create-vehicle')
+    path('new-vehicle/', create_vehicle, name='create-vehicle'),
+    path('vehicles/<int:pk>', vehicle_detail, name='vehicle-detail'),
+    path('delete-vehicle/<int:pk>', vehicle_delete, name='delete-vehicle'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -11,7 +11,9 @@
 
 {% block main %}
 <a href='{% url 'create-vehicle' %}'> Create Vehicle </a>
+<br>
 {% for vehicle in all_vehicles %}
+    <a href="{% url 'vehicle-detail' vehicle.id %}">{{ vehicle.brand }} {{ vehicle.model }}</a>
     <p>model: {{ vehicle.model }}</p> 
     <p>brand: {{ vehicle.brand }}</p> 
     <p>type: {{ vehicle.type }}</p>

@@ -32,3 +32,16 @@ def create_vehicle(request):
         return redirect('/vehicles/')
     if request.method == 'GET':
         return render(request, 'create_vehicle.html')
+    
+def vehicle_detail(request, pk):
+    vehicle = Vehicle.objects.get(id=pk)
+    context = {
+        'vehicle': vehicle,
+        'brand': vehicle.brand
+    }
+    return render(request, 'vehicle_detail.html', context)
+
+def vehicle_delete(request, pk):
+    vehicle = Vehicle.objects.get(id=pk)
+    vehicle.delete()
+    return redirect('/vehicles/')

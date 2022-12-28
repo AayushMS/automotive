@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Vehicle detail
+{% endblock %}
+ 
+{% block header %}
+    Vehicle Detail
+{% endblock %}
+
+{% block main %}
+
+<h1>{{ vehicle.brand }} {{vehicle.model}}</h1>
+<h4>model: {{ vehicle.model }}</h4>
+<h4>brand: {{ vehicle.brand }}</h4>
+<h4>type: {{ vehicle.type }}</h4>
+<h4>manufactured_date: {{ vehicle.manufactured_date }}</h4>
+
+<form method="POST" action="{% url 'delete-vehicle' vehicle.id %}">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+</form>
+
+{% endblock %}
+
+
+
