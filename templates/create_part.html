@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Create Part
+{% endblock %}
+
+{% block header %}
+Create Part
+{% endblock %}
+
+{% block main %}
+<h1>
+    Create Part Form
+</h1>
+<form action='{% url 'create-part' %}' method='POST'>
+     {% csrf_token %} 
+    {{ form.as_p }}
+
+    <button type='submit'>Submit</button>
+</form>
+
+{% endblock %}

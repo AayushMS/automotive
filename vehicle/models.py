@@ -10,3 +10,11 @@ class Vehicle(models.Model):
     
     def __str__(self):
         return f"{self.brand} {self.model}"
+    
+class Parts(models.Model):
+    name = models.CharField(max_length=255)
+    manufactuer = models.CharField(max_length=255)
+    quantity = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.id} {self.name}"

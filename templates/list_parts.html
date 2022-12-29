@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    List Parts
+{% endblock %}
+ 
+{% block header %}
+    Parts
+{% endblock %}
+
+{% block main %}
+<a href='{% url 'create-part' %}'> Create Part </a>
+<br>
+{% for part in all_parts %}
+    <p> {{ part.name }} </p>
+    <p> {{ part.manufactuer }} </p>
+    <p> {{ part.quantity }} </p>
+    <br>
+    <br>
+
+{% endfor %}
+
+{% endblock %}
+
+
+

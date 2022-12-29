@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from vehicle.models import Vehicle
+from vehicle.forms import PartsForm
+from vehicle.models import Parts, Vehicle
+from django.views import View
 
 def about(request):
     return render(request, "about.html")
@@ -45,3 +47,28 @@ def vehicle_delete(request, pk):
     vehicle = Vehicle.objects.get(id=pk)
     vehicle.delete()
     return redirect('/vehicles/')
+
+def list_parts(request):
+   if request.method == 'GET':
+        context = {
+            'all_parts': Parts.objects.all()
+        }
+        return render(request, 'list_parts.html', context)
+    
+class CreatePart(View):
+    def get(self, request):
+        form = PartsForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'create_part.html', context)
+    
+    def post(self, request): 
+        form = PartsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/parts/')
+        context = {
+            'form': form
+        }
+        return render(request, 'create_part.html', context)
