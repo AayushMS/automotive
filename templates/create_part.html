@@ -15,7 +15,9 @@ Create Part
 </h1>
 <form action='{% url 'create-part' %}' method='POST'>
      {% csrf_token %} 
+
     {{ form.as_p }}
+
 
     <button type='submit'>Submit</button>
 </form>

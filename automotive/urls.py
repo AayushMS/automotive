@@ -14,25 +14,33 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from vehicle.views import about, list_vehicles, home, \
+from django.urls import path, include
+from vehicle.views import PartDetail, UpdatePart, about, delete_part, list_vehicles, home, \
     create_vehicle, vehicle_detail, vehicle_delete, list_parts, \
-        CreatePart
+        CreatePart, UpdateVehicle
 
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('users/', include('users.urls', namespace='users')),
     path('about-our-shop/', about, name='about'),
     path('', home, name='home'),
     path('vehicles/', list_vehicles, name='list-vehicle'),
     path('new-vehicle/', create_vehicle, name='create-vehicle'),
     path('vehicles/<int:pk>', vehicle_detail, name='vehicle-detail'),
     path('delete-vehicle/<int:pk>', vehicle_delete, name='delete-vehicle'),
+    path('update-vehicle/<int:pk>', UpdateVehicle.as_view(), name='update-vehicle'),
     
     path('parts/', list_parts, name='list-parts'),
     path('new-part/', CreatePart.as_view(), name='create-part'),
+    path('part/<int:pk>', PartDetail.as_view(), name='part-detail'),
+    path('update-part/<int:pk>', UpdatePart.as_view(), name='update-part'),
+    path('delete-part/<int:pk>', delete_part, name='delete-part'),
+    
+    
+
 
 
 

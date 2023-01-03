@@ -13,6 +13,7 @@
 <a href='{% url 'create-part' %}'> Create Part </a>
 <br>
 {% for part in all_parts %}
+    <a href='{% url 'part-detail' part.id %}'>{{ part.name }}</a>
     <p> {{ part.name }} </p>
     <p> {{ part.manufactuer }} </p>
     <p> {{ part.quantity }} </p>

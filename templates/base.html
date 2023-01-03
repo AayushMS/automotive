@@ -5,10 +5,19 @@
 <head>
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+
 </head>
 
 <body>
     <header>
+        {% if request.user.is_authenticated %}
+            Hi {{ request.user.username}}
+        {% endif %}
+        <a href="#">Login</a>
+        <a href="{% url "users:registration" %}">Register</a>
         <h1>{% block header %} {% endblock %}</h1>
     </header>
     <nav>
@@ -25,4 +34,28 @@
     </footer>
 </body>
 
+{% if messages %} 
+    {% for message in messages %}
+    <script>
+        toastr.{{ message.tags }}("{{ message }}", "Notification", {
+            positionClass: "toast-top-right",
+            timeOut: 5000,
+            closeButton: !0,
+            debug: !1,
+            newestOnTop: !0,
+            progressBar: !0,
+            preventDuplicates: !0,
+            onclick: null,
+            showDuration: "6000",
+            hideDuration: "6000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+            tapToDismiss: !1
+        })
+    </script>
+    {% endfor %} 
+{% endif %} 
 </html>
