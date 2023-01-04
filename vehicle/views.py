@@ -1,20 +1,20 @@
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from vehicle.forms import PartsForm
 from vehicle.models import Parts, Vehicle
 from django.views import View
 from django.urls import reverse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def about(request):
     return render(request, "about.html")
 
-
 def home(request):
     return render(request, 'home.html')
 
-
+@login_required(login_url='/users/login')
 def list_vehicles(request):
     if request.method == 'GET':
         context = {
@@ -65,7 +65,7 @@ def list_parts(request):
         return render(request, 'list_parts.html', context)
 
 
-class CreatePart(View):
+class CreatePart(LoginRequiredMixin, View):
     def get(self, request):
         form = PartsForm()
         context = {
@@ -78,7 +78,6 @@ class CreatePart(View):
         if form.is_valid():
             form.save()
             messages.success(request, 'Part created successfully')
-            messages.error(request, 'Test')
             return redirect('/parts/')
         context = {
             'form': form
@@ -137,6 +136,8 @@ class UpdatePart(View):
         form = PartsForm(request.POST, instance = part)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Successfully updated part')
             return redirect(reverse('list-parts'))
+        messages.error(request, 'Invalid data')
         context = {'form': form, 'part': part}
         return render(request, 'part_update.html', context)

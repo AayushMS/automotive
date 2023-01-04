@@ -15,9 +15,13 @@
     <header>
         {% if request.user.is_authenticated %}
             Hi {{ request.user.username}}
-        {% endif %}
-        <a href="#">Login</a>
+            <a href="{% url "users:logout" %}">Logout</a>
+        {% else %}
+        <a href="{% url 'users:login' %}">Login</a>
         <a href="{% url "users:registration" %}">Register</a>
+        {% endif %}
+        
+
         <h1>{% block header %} {% endblock %}</h1>
     </header>
     <nav>
