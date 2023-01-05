@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Update Part
+{% endblock %}
+
+{% block header %}
+Update Part
+{% endblock %}
+
+{% block main %}
+<h1>
+    Update Part Form
+</h1>
+<form method="POST" action="{% url 'update-part' part.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button> <br>
+</form>
+
+{% endblock %}

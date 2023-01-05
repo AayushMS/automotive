@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Part detail
+{% endblock %}
+ 
+{% block header %}
+    Part Detail
+{% endblock %}
+
+{% block main %}
+
+<h1>{{ part.name }} </h1>
+<h4>name: {{ part.name }}</h4>
+<h4>manufactuer: {{ part.manufactuer }}</h4>
+<h4>quantity: {{ part.quantity }}</h4>
+
+<form method="POST" action="{% url 'delete-part' part.id %}">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+</form>
+
+<button><a href="{% url 'update-part' part.id %}" >Update</a></button>
+
+{% endblock %}
+
+
+

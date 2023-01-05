@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Update Vehicle
+{% endblock %}
+
+{% block header %}
+Update Vehicle
+{% endblock %}
+
+{% block main %}
+<h1>
+    Update Vehicle Form
+</h1>
+<form method="POST" action="{% url 'update-vehicle' vehicle.id %}">
+    {% csrf_token %}
+    <p>model</p>
+    <input type="text" name="model" value="{{ vehicle.model }}"> <br>
+    <p>brand</p>
+    <input type="text" name="brand" value="{{ vehicle.brand }}"> <br>
+    <p>type</p>
+    <input type="text" name="type" value="{{ vehicle.type }}"> <br>
+    <p>manufactured_date</p>
+    <input type="datetime" name="manufactured_date" value="{{ vehicle.manufactured_date|date:"Y-m-d" }}"> <br>
+    <button type="submit">Submit</button> <br>
+</form>
+
+{% endblock %}
