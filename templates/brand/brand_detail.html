@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Brand Detail
+{% endblock %}
+ 
+{% block header %}
+    Brand
+{% endblock %}
+
+{% block main %}
+
+{{ brand.name }}
+<br>
+<a href="{% url 'update-brand' brand.id %}"><button>Update</button></a>
+<a href="{% url 'delete-brand' brand.id %}"><button>Delete</button></a>
+
+
+{% endblock %}
+
+
+

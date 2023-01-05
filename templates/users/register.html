@@ -2,21 +2,21 @@
 {% load static %}
 
 {% block title %}
-Update Vehicle
+Register
 {% endblock %}
 
 {% block header %}
-Update Vehicle
+Registration
 {% endblock %}
 
 {% block main %}
 <h1>
-    Update Vehicle Form
+    Registration
 </h1>
-<form method="POST">
-    {% csrf_token %}
+<form action='{% url 'users:registration' %}' method='POST'>
+     {% csrf_token %} 
     {{ form.as_p }}
-    <button type="submit">Submit</button> <br>
+    <button type='submit'>Submit</button>
 </form>
 
 {% endblock %}

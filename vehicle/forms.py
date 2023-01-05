@@ -1,6 +1,6 @@
 from django import forms
 
-from vehicle.models import Parts
+from vehicle.models import Brand, Parts, Vehicle
 
 class PartsForm(forms.ModelForm):
     class Meta:
@@ -21,3 +21,13 @@ class PartsForm(forms.ModelForm):
         if not self.cleaned_data['manufactuer'] == 'Hyundai':
             raise forms.ValidationError('Manufacturer must be Hyundai')
         return self.cleaned_data['manufactuer']
+    
+class VehicleForm(forms.ModelForm):
+    class Meta:
+        model = Vehicle
+        fields = '__all__'
+        
+class BrandForm(forms.ModelForm):
+    class Meta:
+        model = Brand
+        fields = ('name',)

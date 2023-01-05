@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from vehicle.views import PartDetail, UpdatePart, about, delete_part, list_vehicles, home, \
     create_vehicle, vehicle_detail, vehicle_delete, list_parts, \
-        CreatePart, UpdateVehicle
+        CreatePart, UpdateVehicle, ListBrand, CreateBrand, DetailBrand, DeleteBrand, UpdateBrand
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -39,9 +39,15 @@ urlpatterns = [
     path('update-part/<int:pk>', UpdatePart.as_view(), name='update-part'),
     path('delete-part/<int:pk>', delete_part, name='delete-part'),
     
+    path('brand/list', ListBrand.as_view(), name='list-brands'),
+    path('brand/create', CreateBrand.as_view(), name='create-brand'),
+    path('brand/retrieve/<int:pk>', DetailBrand.as_view(), name='detail-brand'),
+    path('brand/update/<int:pk>', UpdateBrand.as_view(), name='update-brand'),
+    path('brand/delete/<int:pk>', DeleteBrand.as_view(), name='delete-brand'),
+
     
 
-
-
-
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

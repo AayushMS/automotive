@@ -1,11 +1,13 @@
+from sre_constants import SUCCESS
 from django.shortcuts import render, redirect
-from vehicle.forms import PartsForm
-from vehicle.models import Parts, Vehicle
+from vehicle.forms import BrandForm, PartsForm, VehicleForm
+from vehicle.models import Brand, Parts, Vehicle
 from django.views import View
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
 
 
 def about(request):
@@ -18,7 +20,6 @@ def home(request):
 def list_vehicles(request):
     if request.method == 'GET':
         context = {
-            'name': 'Harry',
             'all_vehicles': Vehicle.objects.all()
         }
         return render(request, 'list_vehicles.html', context)
@@ -26,27 +27,21 @@ def list_vehicles(request):
 
 def create_vehicle(request):
     if request.method == 'POST':
-        model = request.POST['model']
-        brand = request.POST['brand']
-        type = request.POST['type']
-        manufactured_date = request.POST['manufactured_date']
-        vehicle = Vehicle(
-            model=model,
-            brand=brand,
-            type=type,
-            manufactured_date=manufactured_date,
-        )
-        vehicle.save()
-        return redirect('/vehicles/')
+        form = VehicleForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()  
+            messages.success(request, 'Vehicle created successfully')
+            return redirect('/vehicles/')
+        context = {'form':form}
+        return render(request, 'create_vehicle.html', context)
     if request.method == 'GET':
-        return render(request, 'create_vehicle.html')
+        return render(request, 'create_vehicle.html',{'form':VehicleForm()})
 
 
 def vehicle_detail(request, pk):
     vehicle = Vehicle.objects.get(id=pk)
     context = {
         'vehicle': vehicle,
-        'brand': vehicle.brand
     }
     return render(request, 'vehicle_detail.html', context)
 
@@ -89,20 +84,21 @@ class CreatePart(View):
 class UpdateVehicle(View):
 
     def get(self, request, pk):
+        vehicle = Vehicle.objects.get(id=pk)
         context = {
-            'vehicle': Vehicle.objects.get(id=pk)
+            'form': VehicleForm(instance=vehicle)
         }
         return render(request, 'update_vehicle.html', context)
 
     def post(self, request, pk):
         vehicle = Vehicle.objects.get(id=pk)
-        vehicle.model = request.POST.get('model', vehicle.model)
-        vehicle.brand = request.POST.get('brand', vehicle.brand)
-        vehicle.type = request.POST.get('type', vehicle.type)
-        vehicle.manufactured_date = request.POST.get(
-            'manufactured_date', vehicle.manufactured_date)
-        vehicle.save()
-        return redirect(reverse('list-vehicle'))
+        form = VehicleForm(request.POST, instance=vehicle)
+        if form.is_valid():
+            vehicle.save()
+            messages.success(request, 'Vehicle updated successfully')         
+            return redirect(reverse('list-vehicle'))
+        messages.error(request, 'Failed to update vehicle')
+        return render(request, 'update_vehicle.html', {'form':form})
 
 
 class PartDetail(LoginRequiredMixin, View):
@@ -143,3 +139,33 @@ class UpdatePart(View):
         messages.error(request, 'Invalid data')
         context = {'form': form, 'part': part}
         return render(request, 'part_update.html', context)
+
+
+class ListBrand(ListView):
+    model = Brand
+    template_name = 'brand/brand_list.html'
+    context_object_name = 'brands'
+    
+class CreateBrand(CreateView):
+    model = Brand
+    template_name = 'brand/brand_create.html'
+    form_class = BrandForm
+    success_url = reverse_lazy('list-brands')
+    
+class DetailBrand(DetailView):
+    model = Brand
+    template_name = 'brand/brand_detail.html'
+    context_object_name = 'brand'
+    
+    
+class UpdateBrand(UpdateView):
+    model = Brand
+    form_class = BrandForm
+    context_object_name = 'brand'
+    template_name = 'brand/brand_update.html'
+    success_url = reverse_lazy('list-brands')
+    
+class DeleteBrand(DeleteView):
+    model = Brand
+    template_name = 'brand/confirm_delete.html'
+    success_url = reverse_lazy('list-brands')

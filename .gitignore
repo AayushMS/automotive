@@ -1,0 +1,14 @@
+# created by virtualenv automatically
+venv/
+.vscode/
+.vscode/launch.json
+!.vscode/ 
+.history
+*.log
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+media
+.idea/
+uploads/

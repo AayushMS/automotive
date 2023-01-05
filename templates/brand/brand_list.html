@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    List Brands
+{% endblock %}
+ 
+{% block header %}
+    Brands
+{% endblock %}
+
+{% block main %}
+{% if request.user.is_superuser %}
+    <a href='{% url 'create-brand' %}'> Create Brand </a>
+{% endif %}
+<br>
+{% for brand in brands %}
+    {{ forloop.counter }} <a href="{% url 'detail-brand' brand.id %}">{{ brand.name }}</a>
+    <br>
+{% endfor %}
+
+{% endblock %}
+
+
+

@@ -13,17 +13,10 @@ Create Vehicle
 <h1>
     Create Vehicle Form
 </h1>
-<form method="POST" action="{% url 'create-vehicle' %}">
+<form method="POST" action="{% url 'create-vehicle' %}" enctype="multipart/form-data">
     {% csrf_token %}
-    <p>model</p>
-    <input type="text" name="model"> <br>
-    <p>brand</p>
-    <input type="text" name="brand"> <br>
-    <p>type</p>
-    <input type="text" name="type"> <br>
-    <p>manufactured_date</p>
-    <input type="datetime" name="manufactured_date"> <br>
-    <button type="submit">Submit</button> <br>
+    {{ form.as_p }}
+    <button type="submit" >Submit</button>
 </form>
 
 {% endblock %}
