@@ -8,9 +8,10 @@ User = get_user_model()
 
 class UserCreationForm(UserCreationForm):
 
+    is_superuser = forms.BooleanField()
     class Meta:
         model = User
-        fields = ("username", "email")
+        fields = ("username", "email", 'is_superuser')
 
 class UserChangeForm(UserChangeForm):
 

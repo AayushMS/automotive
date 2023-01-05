@@ -12,7 +12,7 @@ def about(request):
     return render(request, "about.html")
 
 def home(request):
-    return render(request, 'home.html')
+        return render(request, 'home.html')
 
 @login_required(login_url='/users/login')
 def list_vehicles(request):
@@ -65,7 +65,7 @@ def list_parts(request):
         return render(request, 'list_parts.html', context)
 
 
-class CreatePart(LoginRequiredMixin, View):
+class CreatePart(View):
     def get(self, request):
         form = PartsForm()
         context = {
@@ -105,8 +105,10 @@ class UpdateVehicle(View):
         return redirect(reverse('list-vehicle'))
 
 
-class PartDetail(View):
-
+class PartDetail(LoginRequiredMixin, View):
+    
+    login_url = '/users/login'
+    
     def get(self, request, pk):
         context = {
             'part': Parts.objects.get(id=pk)

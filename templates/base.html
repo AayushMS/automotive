@@ -28,7 +28,10 @@
         <ul>
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
+            {% if request.user.is_authenticated %}
+         
             <li><a href="{% url 'list-vehicle' %}">Vehicles</a></li>
+            {% endif %}
             <li><a href="{% url 'list-parts' %}">Parts</a></li>
         </ul>
     </nav>

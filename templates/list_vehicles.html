@@ -10,7 +10,9 @@
 {% endblock %}
 
 {% block main %}
+{% if request.user.is_authenticated and request.user.is_superuser %}
 <a href='{% url 'create-vehicle' %}'> Create Vehicle </a>
+{% endif %}
 <br>
 {% for vehicle in all_vehicles %}
     <a href="{% url 'vehicle-detail' vehicle.id %}">{{ vehicle.brand }} {{ vehicle.model }}</a>
