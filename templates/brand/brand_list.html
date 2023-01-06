@@ -19,6 +19,32 @@
     <br>
 {% endfor %}
 
+<br>
+<br>
+
+{% if is_paginated %}
+<div class="pagination">
+    <span class="page-links">
+        {% if page_obj.has_previous %}
+            <form method='GET' action="{% url 'list-brands' %}">
+                <input type='hidden' name='page' value='{{ page_obj.previous_page_number }}'>
+                <button>Prev</button>
+            </form>
+        {% endif %}
+        <span class="page-current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+        {% if page_obj.has_next %}
+        <form method='GET' action="{% url 'list-brands' %}">
+            <input type='hidden' name='page' value='{{ page_obj.next_page_number }}'>
+            <button>Next</button>
+
+        </form>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+
 {% endblock %}
 
 

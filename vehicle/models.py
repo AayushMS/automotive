@@ -25,6 +25,7 @@ class Vehicle(models.Model):
         ("CROSSOVER", "Crossover"),
     )
     
+    
     vehicle_no = models.CharField(max_length=10, unique=True)
     model = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)

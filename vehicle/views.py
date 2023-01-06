@@ -51,6 +51,25 @@ def vehicle_delete(request, pk):
     vehicle.delete()
     return redirect('/vehicles/')
 
+class UpdateVehicle(View):
+
+    def get(self, request, pk):
+        vehicle = Vehicle.objects.get(id=pk)
+        context = {
+            'form': VehicleForm(instance=vehicle)
+        }
+        return render(request, 'update_vehicle.html', context)
+
+    def post(self, request, pk):
+        vehicle = Vehicle.objects.get(id=pk)
+        form = VehicleForm(request.POST, instance=vehicle)
+        if form.is_valid():
+            vehicle.save()
+            messages.success(request, 'Vehicle updated successfully')         
+            return redirect(reverse('list-vehicle'))
+        messages.error(request, 'Failed to update vehicle')
+        return render(request, 'update_vehicle.html', {'form':form})
+
 
 def list_parts(request):
     if request.method == 'GET':
@@ -79,26 +98,6 @@ class CreatePart(View):
         }
         messages.error(request, 'Failed to create part')
         return render(request, 'create_part.html', context)
-
-
-class UpdateVehicle(View):
-
-    def get(self, request, pk):
-        vehicle = Vehicle.objects.get(id=pk)
-        context = {
-            'form': VehicleForm(instance=vehicle)
-        }
-        return render(request, 'update_vehicle.html', context)
-
-    def post(self, request, pk):
-        vehicle = Vehicle.objects.get(id=pk)
-        form = VehicleForm(request.POST, instance=vehicle)
-        if form.is_valid():
-            vehicle.save()
-            messages.success(request, 'Vehicle updated successfully')         
-            return redirect(reverse('list-vehicle'))
-        messages.error(request, 'Failed to update vehicle')
-        return render(request, 'update_vehicle.html', {'form':form})
 
 
 class PartDetail(LoginRequiredMixin, View):
@@ -145,6 +144,7 @@ class ListBrand(ListView):
     model = Brand
     template_name = 'brand/brand_list.html'
     context_object_name = 'brands'
+    paginate_by = 2
     
 class CreateBrand(CreateView):
     model = Brand
