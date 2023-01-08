@@ -16,7 +16,9 @@
 <h4>brand: {{ vehicle.brand }}</h4>
 <h4>type: {{ vehicle.type }}</h4>
 <h4>manufactured_date: {{ vehicle.manufactured_date }}</h4>
+{% if vehicle.image %}
 <img src='{{ vehicle.image.url }}'>
+{% endif %}
 
 <form method="POST" action="{% url 'delete-vehicle' vehicle.id %}">
     {% csrf_token %}

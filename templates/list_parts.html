@@ -12,15 +12,27 @@
 {% block main %}
 <a href='{% url 'create-part' %}'> Create Part </a>
 <br>
-{% for part in all_parts %}
-    <a href='{% url 'part-detail' part.id %}'>{{ part.name }}</a>
-    <p> {{ part.name }} </p>
-    <p> {{ part.manufactuer }} </p>
-    <p> {{ part.quantity }} </p>
-    <br>
-    <br>
-
-{% endfor %}
+<br>
+<table>
+    <tr>
+        <th>SN</th>
+        <th>Part</th>
+        <th>Manufacturer</th>
+        <th>Quantity</th>
+        <th>Action</th>
+    </tr>
+    {% for part in all_parts %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ part.name }}</td>
+        <td>{{ part.manufactuer }}</td>
+        <td>{{ part.quantity }}</td>
+        <td><a href="{% url 'part-detail' part.id %}">View</a></td>
+    </tr>
+    {% empty %}
+    <td>No Parts</td>
+    {% endfor %}
+</table>
 
 {% endblock %}
 

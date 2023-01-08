@@ -10,18 +10,40 @@
 {% endblock %}
 
 {% block main %}
+
+<form method='GET' action={% url 'list-vehicle' %}>
+    <input type='text' name='q'>
+    <input type='submit' value='Search' placeholder="Search Vehicles">
+</form>
+
 {% if request.user.is_authenticated and request.user.is_superuser %}
 <a href='{% url 'create-vehicle' %}'> Create Vehicle </a>
 {% endif %}
 <br>
-{% for vehicle in all_vehicles %}
-    <a href="{% url 'vehicle-detail' vehicle.id %}">{{ vehicle.brand }} {{ vehicle.model }}</a>
-    <p>model: {{ vehicle.model }}</p> 
-    <p>brand: {{ vehicle.brand }}</p> 
-    <p>type: {{ vehicle.type }}</p>
-    <br>
-    <br>
-{% endfor %}
+<br>
+
+<table>
+    <tr>
+        <th>SN</th>
+        <th>Vehicle No</th>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Type</th>
+        <th>Actions</th>
+    </tr>
+    {% for vehicle in all_vehicles %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ vehicle.vehicle_no }}</td>
+        <td>{{ vehicle.brand }}</td>
+        <td>{{ vehicle.model }}</td>
+        <td>{{ vehicle.type }}</td>
+        <td><a href="{% url 'vehicle-detail' vehicle.id %}">View</a></td>
+    </tr>
+    {% empty %}
+    <td>No vehicles</td>
+    {% endfor %}
+</table>
 
 {% endblock %}
 

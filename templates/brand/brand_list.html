@@ -14,13 +14,23 @@
     <a href='{% url 'create-brand' %}'> Create Brand </a>
 {% endif %}
 <br>
-{% for brand in brands %}
-    {{ forloop.counter }} <a href="{% url 'detail-brand' brand.id %}">{{ brand.name }}</a>
-    <br>
-{% endfor %}
-
 <br>
-<br>
+<table>
+    <tr>
+        <th>SN</th>
+        <th>Brand Name</th>
+        <th>Action</th>
+    </tr>
+    {% for brand in brands %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ brand.name }}</td>
+        <td><a href="{% url 'detail-brand' brand.id %}">View</a></td>
+    </tr>
+    {% empty %}
+    <td>No vehicles</td>
+    {% endfor %}
+</table>
 
 {% if is_paginated %}
 <div class="pagination">
@@ -38,7 +48,6 @@
         <form method='GET' action="{% url 'list-brands' %}">
             <input type='hidden' name='page' value='{{ page_obj.next_page_number }}'>
             <button>Next</button>
-
         </form>
         {% endif %}
     </span>

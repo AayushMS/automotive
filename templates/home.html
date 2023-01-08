@@ -2,17 +2,58 @@
 {% load static %}
 
 {% block title %}
-    Home
+Home
 {% endblock %}
- 
+
 {% block header %}
-    Welcome to My Home Page
+Welcome to My Home Page
 {% endblock %}
 
 {% block main %}
-    <h2>Main</h2>
-    <p>I am a web developer and I love building websites and applications.</p>
+<h2>Automotive</h2>
+<p>Total Vehicles: {{ vehicle_count }}</p>
+<p>Total Parts: {{ parts_count }}</p>
+<p>Total Brands: {{ brand_count }}</p>
+<p>Total Vehicles by Brand</p>
+
+<table>
+    <tr>
+        <th>SN</th>
+        <th>Brand</th>
+        <th>Number of vehicles</th>
+    </tr>
+    {% for vehicle in vehicle_count_by_brand %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ vehicle.brand__name }}</td>
+        <td>{{ vehicle.total }}</td>
+    </tr>
+    {% empty %}
+    <td>No vehicles</td>
+    {% endfor %}
+</table>
+<p>Total Vehicles by Type</p>
+
+<table>
+    <tr>
+        <th>SN</th>
+        <th>Brand</th>
+        <th>Number of vehicles</th>
+    </tr>
+    {% for vehicle in vehicle_count_by_type %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ vehicle.type }}</td>
+        <td>{{ vehicle.total }}</td>
+    </tr>
+    {% empty %}
+    <td>No vehicles</td>
+    {% endfor %}
+</table>
+
+<p>Total Vehicles created by you - {{ request.user.username }}: {{ total_vehicles_created_by_user }}</p>
+<p></p>
+
+
+
 {% endblock %}
-
-
-
